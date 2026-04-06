@@ -16,5 +16,3 @@ Reglas
 ## 📷 Guía visual DMR4
 
 ![Instalación](media/instalacion.jpg)
-
-![Accesorios del sistema de riego](media/accesorios.jpg)
