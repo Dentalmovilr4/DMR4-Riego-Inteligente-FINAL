@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>DMR4 Riego</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      background: #e8f5e9;
+    }
+    button {
+      width: 80%;
+      padding: 15px;
+      margin: 10px;
+      font-size: 18px;
+    }
+    img {
+      width: 90%;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h2>🌱 DMR4 Riego Inteligente</h2>
+
+<button onclick="mostrar('aspersores')">🌧 Aspersores</button>
+<button onclick="mostrar('tuberia')">🚰 Tubería</button>
+<button onclick="mostrar('bomba')">⛽ Bomba</button>
+<button onclick="mostrar('zonas')">🌱 Zonas</button>
+
+<p id="texto"></p>
+<img id="imagen" src="">
+
+<script>
+function hablar(texto){
+  let voz = new SpeechSynthesisUtterance(texto);
+  voz.lang = "es-ES";
+  speechSynthesis.speak(voz);
+}
+
+function mostrar(tipo){
+  let texto = "";
+  let img = "";
+
+  if(tipo=="aspersores"){
+    texto="Ponga aspersores a 10 metros. No los junte.";
+    img="media/aspersores.jpg";
+  }
+
+  if(tipo=="tuberia"){
+    texto="Use tubería gruesa primero y luego delgada.";
+    img="media/tuberia.jpg";
+  }
+
+  if(tipo=="bomba"){
+    texto="No prenda la bomba sin agua.";
+    img="media/bomba.jpg";
+  }
+
+  if(tipo=="zonas"){
+    texto="Divida el terreno y riegue por partes.";
+    img="media/zonas.jpg";
+  }
+
+  document.getElementById("texto").innerText = texto;
+  document.getElementById("imagen").src = img;
+
+  hablar(texto);
+}
+</script>
+
+</body>
+</html>
