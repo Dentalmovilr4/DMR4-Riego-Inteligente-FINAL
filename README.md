@@ -13,3 +13,6 @@ Reglas
 - No riegue todo al tiempo
 - Empiece desde la parte alta
 - Revise fugas
+- ## 📷 Guía visual DMR4
+
+![Instalación](media/instalacion.jpg)
