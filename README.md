@@ -15,4 +15,7 @@ Reglas
 - Revise fugas
 ## 📷 Guía visual DMR4
 
-![Instalación](media/instalacion.jpg)
+![Instalación](media/instalación.jpg.png)
+
+![Accesorios](media/accesorios.jpg.png)
+
