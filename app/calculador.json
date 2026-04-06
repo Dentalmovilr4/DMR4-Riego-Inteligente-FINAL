@@ -1,0 +1,6 @@
+{
+  "pasto": { "tiempo": 60, "aspersores": 8 },
+  "maiz": { "tiempo": 40, "aspersores": 6 },
+  "name": { "tiempo": 60, "aspersores": 6 },
+  "yuca": { "tiempo": 30, "aspersores": 5 }
+}
