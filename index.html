@@ -3,21 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <title>DMR4 Riego</title>
+
   <style>
     body {
       font-family: Arial;
       text-align: center;
       background: #e8f5e9;
+      padding: 10px;
     }
+
+    h2 {
+      color: green;
+    }
+
     button {
-      width: 80%;
+      width: 85%;
       padding: 15px;
-      margin: 10px;
+      margin: 8px;
       font-size: 18px;
+      border-radius: 10px;
+      border: none;
+      background: #4CAF50;
+      color: white;
     }
+
     img {
       width: 90%;
       margin-top: 10px;
+      border-radius: 10px;
+    }
+
+    input {
+      width: 80%;
+      padding: 10px;
+      font-size: 16px;
     }
   </style>
 </head>
@@ -30,39 +49,66 @@
 <button onclick="mostrar('tuberia')">🚰 Tubería</button>
 <button onclick="mostrar('bomba')">⛽ Bomba</button>
 <button onclick="mostrar('zonas')">🌱 Zonas</button>
+<button onclick="mostrar('problemas')">⚠️ Problemas</button>
+<button onclick="mostrar('consejos')">💡 Consejos</button>
 
 <p id="texto"></p>
 <img id="imagen" src="">
 
+<hr>
+
+<h3>❓ Pregunte sobre riego</h3>
+
+<input id="pregunta" type="text" placeholder="Ej: no sale agua, qué hago?">
+
+<br><br>
+
+<button onclick="preguntarIA()">Preguntar a la IA</button>
+
+<p id="respuestaIA"></p>
+
 <script>
+
+// 🔊 VOZ
 function hablar(texto){
   let voz = new SpeechSynthesisUtterance(texto);
   voz.lang = "es-ES";
   speechSynthesis.speak(voz);
 }
 
+// 📘 CONTENIDO
 function mostrar(tipo){
   let texto = "";
   let img = "";
 
   if(tipo=="aspersores"){
-    texto="Ponga aspersores a 10 metros. No los junte.";
+    texto="Ponga aspersores a 10 metros. No los junte porque pierde presión.";
     img="media/aspersores.png.jpg";
   }
 
   if(tipo=="tuberia"){
-    texto="Use tubería gruesa primero y luego delgada.";
+    texto="Use tubería gruesa primero (2 pulgadas) y luego más delgada.";
     img="media/tuberia.png.jpg";
   }
 
   if(tipo=="bomba"){
-    texto="No prenda la bomba sin agua.";
+    texto="No prenda la bomba sin agua. Revise que esté cebada.";
     img="media/bomba.png.jpg";
   }
 
   if(tipo=="zonas"){
-    texto="Divida el terreno y riegue por partes.";
+    texto="Divida el terreno y riegue por partes. No todo al tiempo.";
     img="media/zona.png.jpg";
+  }
+
+  if(tipo=="problemas"){
+    texto="Si no sale agua revise presión. Si hay poca fuerza reduzca aspersores.";
+    img="media/zona.png.jpg";
+  }
+
+  if(tipo=="consejos"){
+    texto="Empiece desde arriba. Use buena tubería. Revise fugas siempre.";
+    img="media/tuberia.png.jpg";
   }
 
   document.getElementById("texto").innerText = texto;
@@ -70,6 +116,45 @@ function mostrar(tipo){
 
   hablar(texto);
 }
+
+// 🤖 IA (AHORA CON BACKEND /api)
+async function preguntarIA() {
+
+  let pregunta = document.getElementById("pregunta").value;
+  let respuestaElemento = document.getElementById("respuestaIA");
+
+  if(pregunta == ""){
+    respuestaElemento.innerText = "Escriba una pregunta";
+    return;
+  }
+
+  respuestaElemento.innerText = "Pensando...";
+
+  try {
+
+    let response = await fetch("/api", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        pregunta: pregunta
+      })
+    });
+
+    let data = await response.json();
+
+    let texto = data.candidates?.[0]?.content?.parts?.[0]?.text || "No hubo respuesta";
+
+    respuestaElemento.innerText = texto;
+
+    hablar(texto);
+
+  } catch (error) {
+    respuestaElemento.innerText = "Error conectando con IA";
+  }
+}
+
 </script>
 
 </body>
